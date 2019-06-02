@@ -1,0 +1,25 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/c_platform?useSSL=true
+    username: root
+    password: root
+
+  thymeleaf:
+    cache: false
+    mode: HTML
+
+
+mybatis:
+#  mapper-locations: classpath*:mapper/*.xml
+#  type-aliases-package: com.kk.cplatform.entity
+
+#pagehelper分页插件
+pagehelper:
+    helperDialect: mysql
+    reasonable: true
+    supportMethodsArguments: true
+    params: count=countSql
+
+server:
+  port: 80
