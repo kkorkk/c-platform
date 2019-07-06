@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/c_platform?useSSL=true
+    url: jdbc:mysql://localhost:3306/c_platform?useSSL=false&characterEncoding=utf8
     username: root
     password: root
 
@@ -11,8 +11,8 @@ spring:
 
 
 mybatis:
-#  mapper-locations: classpath*:mapper/*.xml
-#  type-aliases-package: com.kk.cplatform.entity
+  mapper-locations: classpath*:mapper/*.xml
+  type-aliases-package: com.kk.cplatform.model.entity
 
 #pagehelper分页插件
 pagehelper:
