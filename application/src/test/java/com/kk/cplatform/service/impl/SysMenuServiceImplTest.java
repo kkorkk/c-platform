@@ -1,5 +1,6 @@
 package com.kk.cplatform.service.impl;
 
+import com.kk.cplatform.model.dto.SysMenuDTO;
 import com.kk.cplatform.model.entity.SysMenu;
 import com.kk.cplatform.service.SysMenuService;
 import org.junit.Assert;
@@ -11,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -23,14 +25,8 @@ public class SysMenuServiceImplTest {
 
     @Test
     public void save() {
-        SysMenu sysMenu = new SysMenu();
-        sysMenu.setMenuName("test_menu_name");
-        sysMenu.setMenuType(0);
-        sysMenu.setCreateTime(new Date());
-        sysMenu.setIcon("icon_test");
-
-        boolean save = sysMenuService.save(sysMenu);
-        Assert.assertEquals(save, true);
+        List<SysMenuDTO> sysMenuDTOS = sysMenuService.menuTree();
+        System.out.println(sysMenuDTOS);
     }
 
     @Test

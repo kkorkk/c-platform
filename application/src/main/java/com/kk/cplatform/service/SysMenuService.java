@@ -1,6 +1,9 @@
 package com.kk.cplatform.service;
 
+import com.kk.cplatform.model.dto.SysMenuDTO;
 import com.kk.cplatform.model.entity.SysMenu;
+
+import java.util.List;
 
 /**
  * 菜单信息业务处理类
@@ -38,5 +41,12 @@ public interface SysMenuService {
      * @return 菜单信息
      * */
     SysMenu getById(Integer id);
+
+    /**
+     * 获取所有菜单树
+     * @date 2019/7/9 20:17
+     * @return List 菜单树
+     * */
+    List<SysMenuDTO> menuTree();
     
 }
