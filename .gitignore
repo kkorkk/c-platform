@@ -1,9 +1,8 @@
-/target/
+HELP.md
+target/
 !.mvn/wrapper/maven-wrapper.jar
-
-### USER DEFINE $$$
-*.class
-application/target/
+!**/src/main/**
+!**/src/test/**
 
 ### STS ###
 .apt_generated
@@ -22,8 +21,11 @@ application/target/
 
 ### NetBeans ###
 /nbproject/private/
-/build/
 /nbbuild/
 /dist/
 /nbdist/
 /.nb-gradle/
+build/
+
+### VS Code ###
+.vscode/

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="../../../css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="../../../css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="../../../css/plugins/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+    <link href="../../../css/animate.min.css" rel="stylesheet">
+    <link href="../../../css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link href="../../../css/plugins/jsTree/style.min.css" rel="stylesheet">
+</head>
+<body class="gray-bg">
+
+<div class="wrapper wrapper-content">
+
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>部门选择</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="form_basic.html#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div id="jstree1">
+                        <ul>
+                            <li class="jstree-open">H+主题
+                                <ul>
+                                    <li>css
+                                        <ul>
+                                            <li data-jstree='{"type":"css"}'>animate.css</li>
+                                            <li data-jstree='{"type":"css"}'>bootstrap.css</li>
+                                            <li data-jstree='{"type":"css"}'>style.css</li>
+                                        </ul>
+                                    </li>
+                                    <li>email-templates
+                                        <ul>
+                                            <li data-jstree='{"type":"html"}'>action.html</li>
+                                            <li data-jstree='{"type":"html"}'>alert.html</li>
+                                            <li data-jstree='{"type":"html"}'>billing.html</li>
+                                        </ul>
+                                    </li>
+                                    <li>fonts
+                                        <ul>
+                                            <li data-jstree='{"type":"svg"}'>glyphicons-halflings-regular.eot</li>
+                                            <li data-jstree='{"type":"svg"}'>glyphicons-halflings-regular.svg</li>
+                                            <li data-jstree='{"type":"svg"}'>glyphicons-halflings-regular.ttf</li>
+                                            <li data-jstree='{"type":"svg"}'>glyphicons-halflings-regular.woff</li>
+                                        </ul>
+                                    </li>
+                                    <li class="jstree-open">img
+                                        <ul>
+                                            <li data-jstree='{"type":"img"}'>profile_small.jpg</li>
+                                            <li data-jstree='{"type":"img"}'>angular_logo.png</li>
+                                            <li class="text-navy" data-jstree='{"type":"img"}'>html_logo.png</li>
+                                            <li class="text-navy" data-jstree='{"type":"img"}'>mvc_logo.png</li>
+                                        </ul>
+                                    </li>
+                                    <li class="jstree-open">js
+                                        <ul>
+                                            <li data-jstree='{"type":"js"}'>hplus.js</li>
+                                            <li data-jstree='{"type":"js"}'>bootstrap.js</li>
+                                            <li data-jstree='{"type":"js"}'>jquery-2.1.1.js</li>
+                                            <li data-jstree='{"type":"js"}'>jquery-ui.custom.min.js</li>
+                                            <li class="text-navy" data-jstree='{"type":"js"}'>jquery-ui-1.10.4.min.js
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8">
+            <div class="ibox">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>用户操作</h5>
+                        <div class="ibox-tools">
+                            <a class="collapse-link">
+                                <i class="fa fa-chevron-up"></i>
+                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="form_basic.html#">
+                                <i class="fa fa-wrench"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="ibox-content">
+                        <div class="btn-group hidden-xs" id="exampleToolbar" role="group">
+                            <button type="button" class="btn btn-primary" onclick="addUser()">
+                                <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+                                新增
+                            </button>
+                            <button type="button" class="btn btn-info">
+                                <i class="glyphicon glyphicon-education" aria-hidden="true"></i>
+                                编辑
+                            </button>
+                            <button type="button" class="btn btn-danger">
+                                <i class="glyphicon glyphicon-trash" aria-hidden="true"></i>
+                                删除
+                            </button>
+                        </div>
+                        <div class="example">
+<!--                            <table id="exampleTableFromData" data-height="500px" data-mobile-responsive="true"-->
+<!--                                   data-toolbar="exampleToolbar">-->
+<!--                                <thead>-->
+<!--                                <tr>-->
+<!--                                    <th data-field="Tid">ID</th>-->
+<!--                                    <th data-field="First">姓名</th>-->
+<!--                                    <th data-field="sex">性别</th>-->
+<!--                                    <th data-field="Score">评分</th>-->
+<!--                                </tr>-->
+<!--                                </thead>-->
+<!--                            </table>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+</body>
+
+<script src="../../../js/jquery.min.js?v=2.1.4"></script>
+<script src="../../../js/bootstrap.min.js?v=3.3.6"></script>
+<script src="../../../js/content.min.js?v=1.0.0"></script>
+<script src="../../../js/plugins/bootstrap-table/bootstrap-table.min.js"></script>
+<script src="../../../js/plugins/bootstrap-table/bootstrap-table-mobile.min.js"></script>
+<script src="../../../js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+<script src="../../../js/demo/bootstrap-table-demo.min.js"></script>
+<script src="../../../js/plugins/layer/layer.js"></script>
+<script src="../../../js/plugins/jsTree/jstree.min.js"></script>
+
+<script>
+
+    $(function () {
+        $("#jstree1").jstree({
+            "core": {
+                "check_callback": true,
+                "themes": {
+                    "dots": true,//是否显示树连接线
+                    "icons": true,//是否显示节点的图标
+                }
+            },
+            "plugins": ["types", "dnd", "checkbox", "themes"],
+            "types": {
+                "default": {"icon": "fa fa-user"},
+                "html": {"icon": "fa fa-file-code-o"},
+                "svg": {"icon": "fa fa-file-picture-o"},
+                "css": {"icon": "fa fa-file-code-o"},
+                "img": {"icon": "fa fa-file-image-o"},
+                "js": {"icon": "fa fa-file-text-o"}
+            }
+        });
+    })
+
+    function addUser() {
+        layer.open({
+            type: 2,
+            title: '增加用户',
+            maxmin: true,
+            shadeClose: false, // 点击遮罩关闭层
+            area: ['800px', '650px'],
+            content: 'user_add.html'
+        });
+    }
+
+</script>
+
+</html>
