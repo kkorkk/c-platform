@@ -1,6 +1,7 @@
 logging:
   level:
     root: info
+    com.cp.admin.mapper: debug
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource

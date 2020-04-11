@@ -1,10 +1,129 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>数据字典</title>
-</head>
-<body>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
+<head th:include="include :: header">
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="ibox">
+                <div class="ibox-content">
+<!--                    <div class="text-left">-->
+                        <div class="btn-group hidden-xs" id="sysDictToolbar" role="group">
+                            <button type="button" class="btn btn-primary" onclick="addUser()">
+                                <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+                                新增
+                            </button>
+                            <button type="button" class="btn btn-info">
+                                <i class="glyphicon glyphicon-education" aria-hidden="true"></i>
+                                编辑
+                            </button>
+                            <button type="button" class="btn btn-danger">
+                                <i class="glyphicon glyphicon-trash" aria-hidden="true"></i>
+                                删除
+                            </button>
+                        </div>
+
+                        <table id="sysDictTable" data-mobile-responsive="false"
+                               data-height=""
+                               data-toolbar="#sysDictToolbar" data-search="true"
+                               data-show-refresh="true" data-show-columns="true"
+                               data-show-toggle="true">
+                            <thead>
+                                <tr></tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+<!--            </div>-->
+        </div>
+    </div>
+</div>
 </body>
+
+<div th:include="include :: footer"></div>
+<script>
+
+    $("#sysDictTable").bootstrapTable({
+        url: "/sys-dict/page",
+        method: 'post',
+        dataType: 'json',
+        contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+        pagination: true,
+        sidePagination: 'server',
+        striped: true,
+        iconSize : 'outline',
+        pageNumber: 1,
+        pageSize: 10,
+        pageList: [10, 20, 50],
+        smartDisplay: false,
+        clickToSelect: true,
+        queryParams: function (params) {
+            var data = {
+                offset: params.offset,
+                limit: params.limit
+            }
+            return data
+        },
+        columns: [
+            {
+                checkbox : true
+            },
+            {
+                field: 'id',
+                title: '编号',
+                align: 'left',
+                valign: 'middle'
+            },
+            {
+                field: 'type',
+                title: '类型',
+                align: 'left',
+                valign: 'middle'
+            },
+            {
+                field: 'desc',
+                title: '描述',
+                align: 'left',
+                valign: 'middle'
+            },
+            {
+                field: 'name',
+                title: '标签名',
+                align: 'left',
+                valign: 'middle'
+            },
+            {
+                field: 'value',
+                title: '值',
+                align: 'left',
+                valign: 'middle'
+            },
+            {
+                title: '操作',
+                align: 'center',
+                valign: 'middle',
+                formatter: function (value, row, index) {
+                    var e = '<a href="#" class="btn btn-sm btn-primary" onclick="edit(this)" data-id="'+row.id+'"><i class="fa fa-edit"></i>编辑</a>&nbsp;&nbsp;'
+                    var d = '<a href="#" class="btn btn-sm btn-warning" onclick="del(this)" data-id="'+row.id+'"><i class="fa fa-remove"></i>删除</a>'
+                    return e+d
+                }
+            }
+        ]
+    });
+    
+    function edit(data) {
+        var id = $(data).data('id')
+        console.log('edit:'+id)
+    }
+
+    function del(data) {
+        var id = $(data).data('id')
+        console.log('del:'+id)
+    }
+    
+</script>
+
+
 </html>
