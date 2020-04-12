@@ -37,21 +37,24 @@ public class SysDict implements Serializable {
     private String name;
 
     /**
+     * 字段编码
+     * */
+    private String code;
+
+    /**
      * 字典值
      */
     private String value;
 
     /**
-     * 描述
-     */
-    @TableField("`desc`")
-    private String desc;
+     * 删除标记
+     * */
+    private Byte delFlag;
 
     /**
-     * 状态,0:不可用,1:可用
-     */
-    @TableField("`status`")
-    private Boolean status;
+     * 显示顺序
+     * */
+    private Integer orderNum;
 
     /**
      * 创建时间
