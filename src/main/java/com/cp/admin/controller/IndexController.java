@@ -1,32 +1,33 @@
 package com.cp.admin.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class IndexController {
 
-    @RequestMapping("")
+    @GetMapping("")
     public String defaultIndex(){
         return "login";
     }
 
-    @RequestMapping(value = {"index","index/"})
+    @GetMapping(value = {"index","index/"})
     public String index(){
         return "index";
     }
 
-    @RequestMapping("indexMain")
+    @GetMapping("indexMain")
     public String indexMain(){
         return "index_main";
     }
 
-    @RequestMapping("/login")
+    @GetMapping("/login")
     public String login(){
         return "login";
     }
 
-    @RequestMapping("register")
+    @GetMapping("register")
     public String register(){
         return "register";
     }

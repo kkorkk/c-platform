@@ -316,7 +316,10 @@
                 name: "required",
                 code: "required",
                 value: "required",
-                orderNum: "required"
+                orderNum: {
+                    required: true,
+                    min: 0
+                }
             },
             messages: {
                 type: {
@@ -325,7 +328,10 @@
                 name: e + "请输入标签名称",
                 code: e + "请输入标签编码",
                 value: e + "请输入标签值",
-                orderNum4: e + "请输入排序"
+                orderNum4: {
+                    required: e + "请输入排序",
+                    min: "请输入大于等于0的值"
+                }
             }
         });
     }
@@ -360,7 +366,7 @@
         $("#name4Add").val('')
         $("#code4Add").val('')
         $("#value4Add").val('')
-        $("#orderNum4Add").val('')
+        $("#orderNum4Add").val('0')
         $("#remark4Add").val('')
     }
     
