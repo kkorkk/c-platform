@@ -4182,7 +4182,8 @@ body.modal-open {
 }
 
 .logo-name {
-    color: #e6e6e6;
+    /*color: #e6e6e6;*/
+    color: #888;
     font-size: 180px;
     font-weight: 800;
     letter-spacing: -10px;
