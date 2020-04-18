@@ -29,11 +29,14 @@ public class ShiroConfig {
 
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
         filterChainDefinitionMap.put("/login", "anon");
-        filterChainDefinitionMap.put("/validateCode.img", "anon");
-        filterChainDefinitionMap.put("/css/*", "anon");
-        filterChainDefinitionMap.put("/js/*", "anon");
+        filterChainDefinitionMap.put("/loginAction", "anon");
+        filterChainDefinitionMap.put("/sys-user/save", "anon");
+        filterChainDefinitionMap.put("/register", "anon");
+        filterChainDefinitionMap.put("/validateCode.jpg", "anon");
+        filterChainDefinitionMap.put("/css/**", "anon");
+        filterChainDefinitionMap.put("/js/**", "anon");
         filterChainDefinitionMap.put("/fonts/*", "anon");
-        filterChainDefinitionMap.put("/img/*", "anon");
+        filterChainDefinitionMap.put("/favicon.ico", "anon");
         filterChainDefinitionMap.put("/**", "authc");
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
@@ -43,7 +46,7 @@ public class ShiroConfig {
     @Bean
     public SecurityManager securityManager(){
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-//        securityManager.setRealm(userRealm());
+        securityManager.setRealm(userRealm());
         securityManager.setSessionManager(sessionManager());
         return securityManager;
     }
@@ -56,11 +59,13 @@ public class ShiroConfig {
     @Bean
     public DefaultWebSessionManager sessionManager(){
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
-        sessionManager.setGlobalSessionTimeout(30*1000);
+        sessionManager.setGlobalSessionTimeout(60*60*1000);
+        sessionManager.setSessionValidationInterval(60*60*1000);
+        sessionManager.setSessionIdCookieEnabled(true);
+//        sessionManager.setSessionIdUrlRewritingEnabled(true);
 //        Collection<SessionListener> listeners = new ArrayList<SessionListener>();
 //        listeners.add();
 //        sessionManager.setSessionListeners(listeners);
-        sessionManager.setSessionIdUrlRewritingEnabled(false);
         return sessionManager;
     }
 

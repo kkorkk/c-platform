@@ -11,4 +11,12 @@ public class SysConstant {
     public static final Byte DELETE_FLAG_TRUE = 1;
     public static final Byte DELETE_FLAG_FALSE = 0;
 
+    /*shiro密码加密算法*/
+    public static final String SHIRO_HASH_ALGORITHM_NAME = "MD5";
+    /*shiro密码加密循环次数*/
+    public static final Integer SHIRO_HASH_ITERATIONS = 1;
+    /*shiro-kaptcha-key*/
+    public static final String SHIRO_KAPTCHA_KEY = "shiro_kaptcha_code";
+
+
 }

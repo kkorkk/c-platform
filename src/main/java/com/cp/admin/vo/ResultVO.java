@@ -41,7 +41,7 @@ public class ResultVO {
     }
 
     public static ResultVO error(String message, Object data){
-        return error(SysConstant.RESULT_MESSAGE_ERROR_DEFAULT, data);
+        return error(SysConstant.RESULT_CODE_ERROR_DEFAULT, message, data);
     }
 
     public static ResultVO error(String message){

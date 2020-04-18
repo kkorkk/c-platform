@@ -2,4 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cp.admin.mapper.SysMenuMapper">
 
+    <select id="listByUserId" resultType="com.cp.admin.entity.SysMenu" parameterType="java.lang.Long">
+        select sm.menu_id,sm.parent_id,sm.menu_type,sm.name,sm.url,sm.perms,sm.icon,sm.order_num,sm.create_user,
+        sm.create_time,sm.update_user,sm.update_time
+        from sys_menu sm left join sys_role_menu srm
+        on sm.menu_id = srm.menu_id
+        left join sys_user_role sur on
+        srm.role_id = sur.role_id
+        where sur.user_id = #{userId,jdbcType=BIGINT}
+        order by sm.order_num asc
+    </select>
+
+    <select id="listPermsByUserId" resultType="java.lang.String" parameterType="java.lang.Long">
+        select distinct sm.perms
+        from sys_menu sm left join sys_role_menu srm
+        on sm.menu_id = srm.menu_id
+        left join sys_user_role sur
+        on srm.role_id = sur.role_id
+        where sur.user_id = #{userId,jdbcType=BIGINT}
+    </select>
+
+
 </mapper>
