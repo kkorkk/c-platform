@@ -5,9 +5,11 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.cp.admin.constant.SysConstant;
 import com.cp.admin.entity.SysUser;
 import com.cp.admin.mapper.SysUserMapper;
+import com.cp.admin.param.UserPageParam;
 import com.cp.admin.service.ISysUserService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cp.admin.util.ShiroUtils;
+import com.cp.admin.vo.PageVO;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.stereotype.Service;
 
@@ -69,5 +71,14 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
                 .eq("user_name", userName);
         SysUser sysUser = this.getOne(queryWrapper);
         return sysUser;
+    }
+
+    @Override
+    public PageVO page(UserPageParam userPageParam) {
+        Long deptId = userPageParam.getDeptId();
+        //查找部门列表
+        if(!Objects.isNull(deptId)){
+
+        }
     }
 }

@@ -17,10 +17,10 @@
 
         <form class="m-t text-left" role="form" id="loginForm">
             <div class="form-group">
-                <input type="text" class="form-control" placeholder="用户名" name="userName" required>
+                <input type="text" class="form-control" placeholder="用户名" name="userName" required value="admin">
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" placeholder="密码" name="password" required>
+                <input type="password" class="form-control" placeholder="密码" name="password" required value="admin">
             </div>
             <div class="form-group">
                 <div class="row">
@@ -47,7 +47,12 @@
 <div th:include="include :: footer"></div>
 <script>
     $(function () {
-        validateRule();
+        document.onkeydown = function(e){
+            var ev = document.all ? window.event : e;
+            if(ev.keyCode==13) {
+                login();
+            }
+        }
     })
 
     function login() {
@@ -64,7 +69,7 @@
                 },
                 success : function(data) {
                     if (data.resultCode == 0) {
-                        swal({title:'登录成功',type:'success'})
+                        window.location.href = '/index'
                     } else {
                         swal({title:data.resultMsg,type:'error'})
                     }
@@ -75,14 +80,6 @@
 
     function refreshValidateCode(that) {
         that.src = '/validateCode.jpg?'+Math.random()
-    }
-
-    function validateRule() {
-        // $("#loginForm").validate({
-        //     errorPlacement: function (e, r) {
-        //         e.appendTo(r.is(':radio') || r.is(':checkbox') ? r.parent().parent().parent()  : r.parent())
-        //     }
-        // })
     }
 
 </script>

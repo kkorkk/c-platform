@@ -58,7 +58,10 @@
                 },
                 success : function(data) {
                     if (data.resultCode == 0) {
-                        swal({title:'注册成功',type:'success'})
+                        swal({title:'注册成功',icon:'success'}).then(function (value) {
+                            $("#registerForm")[0].reset()
+                            window.location.href = "/login"
+                        })
                     } else {
                         swal({title:data.resultMsg,type:'error'})
                     }

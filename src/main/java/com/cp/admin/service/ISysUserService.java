@@ -2,6 +2,7 @@ package com.cp.admin.service;
 
 import com.cp.admin.entity.SysUser;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.cp.admin.param.UserPageParam;
 import com.cp.admin.vo.PageVO;
 
 /**
@@ -23,5 +24,7 @@ public interface ISysUserService extends IService<SysUser> {
     SysUser login(SysUser sysUser);
 
     SysUser getByUserName(String userName);
+
+    PageVO page(UserPageParam userPageParam);
 
 }
