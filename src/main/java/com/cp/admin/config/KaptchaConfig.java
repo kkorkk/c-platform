@@ -5,7 +5,6 @@ import com.google.code.kaptcha.util.Config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.lang.ref.PhantomReference;
 import java.util.Properties;
 
 @Configuration
