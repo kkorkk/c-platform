@@ -47,7 +47,7 @@ public class SysDept implements Serializable {
     /**
      * 删除标志，-1：已删除，0：正常
      */
-    private Integer delFlag;
+    private Byte delFlag;
 
     /**
      * 备注

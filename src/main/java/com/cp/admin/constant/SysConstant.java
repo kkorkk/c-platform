@@ -9,9 +9,9 @@ public class SysConstant {
     public static final String RESULT_MESSAGE_ERROR_DEFAULT = "系统错误";
 
     /*删除标记-已删除*/
-    public static final Integer DELETE_FLAG_TRUE = -1;
+    public static final Byte DELETE_FLAG_TRUE = -1;
     /*删除标记-未删除*/
-    public static final Integer DELETE_FLAG_FALSE = 0;
+    public static final Byte DELETE_FLAG_FALSE = 0;
 
     /*shiro密码加密算法*/
     public static final String SHIRO_HASH_ALGORITHM_NAME = "MD5";
