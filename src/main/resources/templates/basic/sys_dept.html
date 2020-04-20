@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="include :: header">
+</head>
+<body class="gray-bg">
+<div class="wrapper wrapper-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="ibox">
+                <div class="ibox-content">
+                    <div class="btn-group hidden-xs" id="sysDeptToolbar" role="group">
+                        <button type="button" class="btn btn-primary" onclick="opAdd()">
+                            <i class="glyphicon glyphicon-plus" aria-hidden="true"></i>
+                            新增
+                        </button>
+                        <button type="button" class="btn btn-info" onclick="opEdit()">
+                            <i class="glyphicon glyphicon-education" aria-hidden="true"></i>
+                            编辑
+                        </button>
+                        <button type="button" class="btn btn-danger" onclick="opDelete()">
+                            <i class="glyphicon glyphicon-trash" aria-hidden="true"></i>
+                            删除
+                        </button>
+                    </div>
+
+                    <table id="sysDeptTable" data-toolbar="#sysDeptToolbar"></table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--添加/编辑模态框-->
+    <div class="modal inmodal fade" id="editSysDeptModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h5 class="modal-title">新增/编辑部门</h5>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal m-t" id="editSysDictForm" name="editSysDictForm">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">部门名称：</label>
+                            <div class="col-sm-8">
+                                <input id="name4Add" name="name" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">父级部门：</label>
+                            <div class="col-sm-8">
+                                <input id="code4Add" name="code" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">排序：</label>
+                            <div class="col-sm-8">
+                                <input id="orderNum4Add" name="orderNum" class="form-control" type="number" value="0">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">备注信息：</label>
+                            <div class="col-sm-8">
+                                <textarea id="remark4Add" name="remark" class="form-control"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" onclick="commit()">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+
+<div th:include="include :: footer"></div>
+
+<script>
+
+    var $table = $('#sysDeptTable');
+    $table.bootstrapTable({
+        url: "/sys-dept/list",
+        method: 'get',
+        dataType: 'json',
+        contentType: "application/x-www-form-urlencoded;charset=UTF-8",
+        striped: true,
+        iconSize : 'outline',
+        smartDisplay: false,
+        // clickToSelect: true,
+        idField: 'deptId',
+        treeShowField: 'name',
+        parentIdField: 'parentId',
+        columns: [
+            { field: 'check',  checkbox: true, formatter: function (value, row, index) {
+                    if (row.check == true) {
+                        // console.log(row.serverName);
+                        //设置选中
+                        return {  checked: true };
+                    }
+                }
+            },
+            // {
+            //     field: 'deptId',
+            //     title: '编号',
+            //     align: 'center',
+            //     valign: 'middle'
+            // },
+            {
+                field: 'name',
+                title: '部门名称',
+                align: 'center',
+                valign: 'middle'
+            },
+            {
+                field: 'orderNum',
+                title: '排序',
+                align: 'center',
+                valign: 'middle'
+            },
+            {
+                field: 'createTime',
+                title: '创建时间',
+                align: 'center',
+                valign: 'middle'
+            },
+            {
+                field: 'remark',
+                title: '操作',
+                align: 'center',
+                valign: 'middle'
+            }
+        ],
+        onResetView: function(data) {
+            //console.log('load');
+            $table.treegrid({
+                initialState: 'collapsed',// 所有节点都折叠
+                // initialState: 'expanded',// 所有节点都展开，默认展开
+                treeColumn: 1,
+                // expanderExpandedClass: 'glyphicon glyphicon-minus',  //图标样式
+                // expanderCollapsedClass: 'glyphicon glyphicon-plus',
+                onChange: function() {
+                    $table.bootstrapTable('resetWidth');
+                }
+            });
+
+            //只展开树形的第一级节点
+            $table.treegrid('getRootNodes').treegrid('expand');
+
+        },
+        onCheck:function(row){
+            var datas = $table.bootstrapTable('getData');
+            // 勾选子类
+            selectChilds(datas,row,"deptId","parentId",true);
+
+            // 勾选父类
+            selectParentChecked(datas,row,"deptId","parentId")
+
+            // 刷新数据
+            $table.bootstrapTable('load', datas);
+        },
+
+        onUncheck:function(row){
+            var datas = $table.bootstrapTable('getData');
+            selectChilds(datas,row,"deptId","parentId",false);
+            $table.bootstrapTable('load', datas);
+        },
+    });
+
+    function opAdd() {
+        $("#editSysDeptModal").modal('show')
+    }
+
+</script>
+
+<script>
+    /**
+     * 选中父项时，同时选中子项
+     * @param datas 所有的数据
+     * @param row 当前数据
+     * @param id id 字段名
+     * @param pid 父id字段名
+     */
+    function selectChilds(datas,row,id,pid,checked) {
+        for(var i in datas){
+            if(datas[i][pid] == row[id]){
+                datas[i].check=checked;
+                selectChilds(datas,datas[i],id,pid,checked);
+            };
+        }
+    }
+
+    function selectParentChecked(datas,row,id,pid){
+        for(var i in datas){
+            if(datas[i][id] == row[pid]){
+                datas[i].check=true;
+                selectParentChecked(datas,datas[i],id,pid);
+            };
+        }
+    }
+
+    function test() {
+        var selRows = $table.bootstrapTable("getSelections");
+        if(selRows.length == 0){
+            alert("请至少选择一行");
+            return;
+        }
+
+        var postData = "";
+        $.each(selRows,function(i) {
+            postData +=  this.id;
+            if (i < selRows.length - 1) {
+                postData += "， ";
+            }
+        });
+        alert("你选中行的 id 为："+postData);
+    }
+
+
+</script>

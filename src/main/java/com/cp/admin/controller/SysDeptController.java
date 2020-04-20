@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * <p>
  *  前端控制器
@@ -23,6 +25,11 @@ public class SysDeptController {
 
     @Autowired
     ISysDeptService sysDeptService;
+
+    @RequestMapping("index")
+    public String index(){
+        return "basic/sys_dept";
+    }
 
     @PostMapping("save")
     @ResponseBody
@@ -65,6 +72,13 @@ public class SysDeptController {
     public PageVO page(Integer offset, Integer limit){
         PageVO<SysDept> page = sysDeptService.page(offset, limit);
         return page;
+    }
+
+    @GetMapping("list")
+    @ResponseBody
+    public List<SysDept> list(){
+        List<SysDept> list = sysDeptService.list(null);
+        return list;
     }
 
 }
