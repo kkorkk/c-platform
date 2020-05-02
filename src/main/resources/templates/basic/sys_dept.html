@@ -91,18 +91,19 @@
         dataType: 'json',
         contentType: "application/x-www-form-urlencoded;charset=UTF-8",
         striped: true,
-        iconSize : 'outline',
+        iconSize: 'outline',
         smartDisplay: false,
         // clickToSelect: true,
         idField: 'deptId',
         treeShowField: 'name',
         parentIdField: 'parentId',
         columns: [
-            { field: 'check',  checkbox: true, formatter: function (value, row, index) {
+            {
+                field: 'check', checkbox: true, formatter: function (value, row, index) {
                     if (row.check == true) {
                         // console.log(row.serverName);
                         //设置选中
-                        return {  checked: true };
+                        return {checked: true};
                     }
                 }
             },
@@ -134,10 +135,15 @@
                 field: 'remark',
                 title: '操作',
                 align: 'center',
-                valign: 'middle'
+                valign: 'middle',
+                formatter: function (value, row, index) {
+                    var e = '<a href="#" class="btn btn-sm btn-primary" onclick="edit(this)" data-id="' + row.deptId + '"><i class="fa fa-edit"></i>编辑</a>&nbsp;&nbsp;'
+                    var d = '<a href="#" class="btn btn-sm btn-warning" onclick="del(this)" data-id="' + row.deptId + '"><i class="fa fa-remove"></i>删除</a>'
+                    return e + d
+                }
             }
         ],
-        onResetView: function(data) {
+        onResetView: function (data) {
             //console.log('load');
             $table.treegrid({
                 initialState: 'collapsed',// 所有节点都折叠
@@ -145,7 +151,7 @@
                 treeColumn: 1,
                 // expanderExpandedClass: 'glyphicon glyphicon-minus',  //图标样式
                 // expanderCollapsedClass: 'glyphicon glyphicon-plus',
-                onChange: function() {
+                onChange: function () {
                     $table.bootstrapTable('resetWidth');
                 }
             });
@@ -154,27 +160,54 @@
             $table.treegrid('getRootNodes').treegrid('expand');
 
         },
-        onCheck:function(row){
+        onCheck: function (row) {
             var datas = $table.bootstrapTable('getData');
             // 勾选子类
-            selectChilds(datas,row,"deptId","parentId",true);
+            selectChilds(datas, row, "deptId", "parentId", true);
 
             // 勾选父类
-            selectParentChecked(datas,row,"deptId","parentId")
+            //selectParentChecked(datas,row,"deptId","parentId")
 
             // 刷新数据
             $table.bootstrapTable('load', datas);
         },
 
-        onUncheck:function(row){
+        onUncheck: function (row) {
             var datas = $table.bootstrapTable('getData');
-            selectChilds(datas,row,"deptId","parentId",false);
+            selectChilds(datas, row, "deptId", "parentId", false);
             $table.bootstrapTable('load', datas);
         },
     });
 
     function opAdd() {
         $("#editSysDeptModal").modal('show')
+    }
+
+    function opEdit() {
+        var selected = $table.bootstrapTable('getSelections')
+        if (selected.length > 1) {
+            swal('选中项数目超过1', '', 'error')
+        }
+        var id = selected[0].deptId
+    }
+
+    function opDelete() {
+        var selected = $table.bootstrapTable('getSelections')
+        if (selected.length > 1) {
+            swal('选中项数目超过1', '', 'error')
+        }
+        var id = selected[0].deptId
+
+    }
+
+    function edit(object) {
+        var id = $(object).data('id')
+        console.log('edit', id)
+    }
+
+    function del(object) {
+        var id = $(object).data('id')
+        console.log('del', id)
     }
 
 </script>
@@ -187,39 +220,41 @@
      * @param id id 字段名
      * @param pid 父id字段名
      */
-    function selectChilds(datas,row,id,pid,checked) {
-        for(var i in datas){
-            if(datas[i][pid] == row[id]){
-                datas[i].check=checked;
-                selectChilds(datas,datas[i],id,pid,checked);
-            };
+    function selectChilds(datas, row, id, pid, checked) {
+        for (var i in datas) {
+            if (datas[i][pid] == row[id]) {
+                datas[i].check = checked;
+                selectChilds(datas, datas[i], id, pid, checked);
+            }
+            ;
         }
     }
 
-    function selectParentChecked(datas,row,id,pid){
-        for(var i in datas){
-            if(datas[i][id] == row[pid]){
-                datas[i].check=true;
-                selectParentChecked(datas,datas[i],id,pid);
-            };
+    function selectParentChecked(datas, row, id, pid) {
+        for (var i in datas) {
+            if (datas[i][id] == row[pid]) {
+                datas[i].check = true;
+                selectParentChecked(datas, datas[i], id, pid);
+            }
+            ;
         }
     }
 
     function test() {
         var selRows = $table.bootstrapTable("getSelections");
-        if(selRows.length == 0){
+        if (selRows.length == 0) {
             alert("请至少选择一行");
             return;
         }
 
         var postData = "";
-        $.each(selRows,function(i) {
-            postData +=  this.id;
+        $.each(selRows, function (i) {
+            postData += this.id;
             if (i < selRows.length - 1) {
                 postData += "， ";
             }
         });
-        alert("你选中行的 id 为："+postData);
+        alert("你选中行的 id 为：" + postData);
     }
 
 
