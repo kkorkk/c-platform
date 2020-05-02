@@ -1,11 +1,13 @@
 package com.cp.admin.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.cp.admin.dto.TreeNodeDTO;
 import com.cp.admin.entity.SysDept;
 import com.cp.admin.service.ISysDeptService;
 import com.cp.admin.vo.PageVO;
 import com.cp.admin.vo.ResultVO;
+import com.cp.admin.vo.SysDeptVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -57,14 +59,18 @@ public class SysDeptController {
     @PostMapping("update")
     @ResponseBody
     public ResultVO update(@RequestBody SysDept sysDept){
-        boolean b = sysDeptService.updateDept(sysDept);
+        try {
+            boolean b = sysDeptService.updateDept(sysDept);
+        } catch (Exception e) {
+            return ResultVO.error(e.getMessage());
+        }
         return ResultVO.success();
     }
 
     @GetMapping("get/{id}")
     @ResponseBody
     public ResultVO get(@PathVariable("id")Long id){
-        SysDept dept = sysDeptService.getDept(id);
+        SysDeptVO dept = sysDeptService.getDept(id);
         return ResultVO.success(dept);
     }
 
@@ -78,7 +84,7 @@ public class SysDeptController {
     @GetMapping("list")
     @ResponseBody
     public List<SysDept> list(){
-        List<SysDept> list = sysDeptService.list(null);
+        List<SysDept> list = sysDeptService.list(new QueryWrapper<SysDept>().eq("del_flag", 0));
         return list;
     }
 

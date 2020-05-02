@@ -10,9 +10,11 @@ import com.cp.admin.service.ISysDeptService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cp.admin.util.ShiroUtils;
 import com.cp.admin.vo.PageVO;
+import com.cp.admin.vo.SysDeptVO;
 import com.google.common.collect.Lists;
 import com.sun.org.apache.regexp.internal.RE;
 import org.apache.commons.collections.CollectionUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
@@ -43,6 +45,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
         if(CollectionUtils.isNotEmpty(depts)){
             throw new Exception("部门名称已存在");
         }
+        sysDept.setDelFlag(SysConstant.DELETE_FLAG_FALSE);
         sysDept.setCreateUser(ShiroUtils.getUserName());
         sysDept.setCreateTime(LocalDateTime.now());
         boolean save = this.save(sysDept);
@@ -65,21 +68,34 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
     }
 
     @Override
-    public boolean updateDept(SysDept sysDept) {
+    public boolean updateDept(SysDept sysDept) throws Exception {
+        QueryWrapper<SysDept> queryWrapper = new QueryWrapper<SysDept>()
+                .eq("name", sysDept.getName());
+        List<SysDept> depts = this.list(queryWrapper);
+        if(CollectionUtils.isNotEmpty(depts)){
+            throw new Exception("部门名称已存在");
+        }
         sysDept.setUpdateUser(ShiroUtils.getUserName());
         sysDept.setUpdateTime(LocalDateTime.now());
         return this.updateById(sysDept);
     }
 
     @Override
-    public SysDept getDept(Long deptId) {
-        return this.getById(deptId);
+    public SysDeptVO getDept(Long deptId) {
+        SysDept sysDept = this.getById(deptId);
+        SysDept parentDept = this.getById(sysDept.getParentId());
+        SysDeptVO vo = new SysDeptVO();
+        BeanUtils.copyProperties(sysDept, vo);
+        vo.setParentName(parentDept==null?"顶级节点":parentDept.getName());
+        return vo;
     }
 
     @Override
     public PageVO<SysDept> page(Integer offset, Integer limit) {
         Page queryPage = new Page(offset/limit+1, limit);
-        Page page = this.page(queryPage);
+        QueryWrapper<SysDept> queryWrapper = new QueryWrapper<SysDept>()
+                .eq("del_flag", 0);
+        Page page = this.page(queryPage, queryWrapper);
 
         PageVO<SysDept> pageVO = new PageVO<>();
         pageVO.setTotal(page.getTotal());
@@ -108,7 +124,9 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
                 .text("顶级节点")
                 .children(null)
                 .build();
-        List<SysDept> deptList = this.list(null);
+        QueryWrapper<SysDept> queryWrapper = new QueryWrapper<SysDept>()
+                .eq("del_flag", 0);
+        List<SysDept> deptList = this.list(queryWrapper);
         buildTree(treeNodeDTO, deptList);
         return Lists.newArrayList(treeNodeDTO);
     }

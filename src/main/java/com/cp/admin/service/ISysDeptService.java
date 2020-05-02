@@ -4,6 +4,7 @@ import com.cp.admin.dto.TreeNodeDTO;
 import com.cp.admin.entity.SysDept;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.cp.admin.vo.PageVO;
+import com.cp.admin.vo.SysDeptVO;
 
 import java.util.List;
 
@@ -42,7 +43,7 @@ public interface ISysDeptService extends IService<SysDept> {
      * @param
      * @return
      **/
-    boolean updateDept(SysDept sysDept);
+    boolean updateDept(SysDept sysDept) throws Exception;
 
     /**
      * 根据ID获取部门信息
@@ -51,7 +52,7 @@ public interface ISysDeptService extends IService<SysDept> {
      * @param
      * @return
      **/
-    SysDept getDept(Long deptId);
+    SysDeptVO getDept(Long deptId);
 
     /**
      * 分页查询
