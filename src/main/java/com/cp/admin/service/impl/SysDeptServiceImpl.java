@@ -3,6 +3,7 @@ package com.cp.admin.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cp.admin.constant.SysConstant;
+import com.cp.admin.dto.TreeNodeDTO;
 import com.cp.admin.entity.SysDept;
 import com.cp.admin.mapper.SysDeptMapper;
 import com.cp.admin.service.ISysDeptService;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -98,6 +100,36 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDept> impl
         List<SysDept> subDeptList = Lists.newArrayList();
         buildDeptList(sysDeptList, sysDeptList);
         return sysDeptList;
+    }
+
+    @Override
+    public List<TreeNodeDTO> tree() {
+        TreeNodeDTO treeNodeDTO = TreeNodeDTO.builder().id(0L)
+                .text("顶级节点")
+                .children(null)
+                .build();
+        List<SysDept> deptList = this.list(null);
+        buildTree(treeNodeDTO, deptList);
+        return Lists.newArrayList(treeNodeDTO);
+    }
+
+    private void buildTree(TreeNodeDTO treeNodeDTO, List<SysDept> deptList) {
+        for(SysDept sysDept : deptList){
+            if(treeNodeDTO.getId().equals(sysDept.getParentId())){
+                List<TreeNodeDTO> children = treeNodeDTO.getChildren();
+                if(null == children){
+                    children = new ArrayList<>();
+                    treeNodeDTO.setChildren(children);
+                }
+                TreeNodeDTO childrenNode = TreeNodeDTO.builder().id(sysDept.getDeptId())
+                        .text(sysDept.getName())
+                        .children(null)
+                        .build();
+                children.add(childrenNode);
+
+                buildTree(childrenNode, deptList);
+            }
+        }
     }
 
     public void buildDeptList(List<SysDept> subDeptList, List<SysDept> resultDeptList){

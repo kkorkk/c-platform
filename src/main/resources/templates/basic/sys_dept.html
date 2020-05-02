@@ -2,6 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head th:include="include :: header">
+<link th:href="@{/css/plugins/jsTree/style.min.css}" rel="stylesheet">
+
 </head>
 <body class="gray-bg">
 <div class="wrapper wrapper-content">
@@ -77,10 +79,39 @@
         </div>
     </div>
 
+    <!--父级部门模态框-->
+    <div class="modal inmodal fade" id="treeModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h5 class="modal-title">父级部门</h5>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal m-t" name="editSysDictForm">
+                        <div class="form-group">
+                            <div class="col-sm-8">
+                                <div id="treeDiv"></div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" onclick="commit()">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 </body>
 
 <div th:include="include :: footer"></div>
+<script th:src="@{/js/plugins/jsTree/jstree.min.js}"></script>
+
 
 <script>
 
@@ -178,6 +209,48 @@
             $table.bootstrapTable('load', datas);
         },
     });
+
+    showTreeModal()
+
+    function showTreeModal(){
+        $.get('/sys-dept/tree', function (resp) {
+            if(resp.resultCode == "0"){
+                var data = resp.data
+                $("#treeDiv").jstree({
+                    "themes": {
+                        "stripes": true,
+                    },
+                    "types": {
+                        "default" : {
+                            "icon": "fa fa-user"
+                        },
+                        'nouser': {
+                            "icon": 'fa fa-user-o'
+                        }
+                    },
+                    "plugins": ["changed", "types"],
+                    'state': {
+                        "opened":true,
+                    },
+                    "core" : {
+                        'data' : data
+                    }
+                })
+                $("#treeDiv").jstree().open_all()
+                $("#treeModal").modal('show')
+            }
+        })
+    }
+
+    var selectedTreeId
+    $('#treeDiv').on("changed.jstree", function(e, data) {
+        if(data.node.id!=-1){
+            selectedTreeId = node.id
+        }
+    });
+
+    
+
 
     function opAdd() {
         $("#editSysDeptModal").modal('show')

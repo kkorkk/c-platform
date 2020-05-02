@@ -1,6 +1,7 @@
 package com.cp.admin.controller;
 
 
+import com.cp.admin.dto.TreeNodeDTO;
 import com.cp.admin.entity.SysDept;
 import com.cp.admin.service.ISysDeptService;
 import com.cp.admin.vo.PageVO;
@@ -79,6 +80,13 @@ public class SysDeptController {
     public List<SysDept> list(){
         List<SysDept> list = sysDeptService.list(null);
         return list;
+    }
+
+    @GetMapping("tree")
+    @ResponseBody
+    public ResultVO tree(){
+        List<TreeNodeDTO> tree = sysDeptService.tree();
+        return ResultVO.success(tree);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.cp.admin.service;
 
+import com.cp.admin.dto.TreeNodeDTO;
 import com.cp.admin.entity.SysDept;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.cp.admin.vo.PageVO;
@@ -78,4 +79,13 @@ public interface ISysDeptService extends IService<SysDept> {
      * @return
      **/
     List<SysDept> getDeptSubList(Long parId);
+
+    /**
+     * 构建树形节点
+     * @author kkorkk
+     * @date 2020/5/2 8:32
+     * @param
+     * @return
+     **/
+    List<TreeNodeDTO> tree();
 }
